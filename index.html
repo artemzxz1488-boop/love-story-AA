@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Артём & Алёна — Wedding Invitation</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#0d0d0d;
+    color:white;
+    font-family:'Montserrat',sans-serif;
+    overflow-x:hidden;
+}
+
+/* ---------- MUSIC BUTTON ---------- */
+
+.music-btn{
+    position:fixed;
+    top:20px;
+    right:20px;
+    width:50px;
+    height:50px;
+    border:none;
+    border-radius:50%;
+    background:rgba(255,255,255,.1);
+    backdrop-filter:blur(10px);
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+    z-index:1000;
+    transition:.3s;
+}
+
+.music-btn:hover{
+    transform:scale(1.08);
+}
+
+/* ---------- ENVELOPE ---------- */
+
+.envelope-screen{
+    position:fixed;
+    inset:0;
+    background:#0d0d0d;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    transition:1.2s ease;
+}
+
+.envelope{
+    width:320px;
+    height:200px;
+    position:relative;
+    cursor:pointer;
+    animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+    100%{transform:translateY(0);}
+}
+
+.envelope-base{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#e8dccd;
+    border-radius:6px;
+    overflow:hidden;
+}
+
+.envelope-top{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#f4eadf;
+    clip-path:polygon(0 0,50% 55%,100% 0);
+    transform-origin:top;
+    transition:1s;
+}
+
+.envelope.open .envelope-top{
+    transform:rotateX(180deg);
+}
+
+.envelope-text{
+    position:absolute;
+    width:100%;
+    bottom:30px;
+    text-align:center;
+    font-family:'Cormorant Garamond',serif;
+    font-size:34px;
+    letter-spacing:2px;
+    color:#6f5b4b;
+}
+
+/* ---------- HERO ---------- */
+
+.hero{
+    min-height:100vh;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    overflow:hidden;
+}
+
+.hero img{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter:brightness(.4);
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    padding:20px;
+}
+
+.hero h1{
+    font-family:'Cormorant Garamond',serif;
+    font-size:90px;
+    font-weight:300;
+    letter-spacing:4px;
+    margin-bottom:10px;
+}
+
+.hero-date{
+    font-size:24px;
+    letter-spacing:5px;
+    margin-bottom:50px;
+}
+
+.countdown{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.countdown div{
+    width:110px;
+    height:110px;
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:50%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    backdrop-filter:blur(8px);
+}
+
+.countdown span{
+    font-size:36px;
+    font-weight:500;
+}
+
+.countdown small{
+    margin-top:5px;
+    opacity:.7;
+}
+
+/* ---------- SECTIONS ---------- */
+
+.section{
+    padding:120px 20px;
+    max-width:1200px;
+    margin:auto;
+}
+
+.section-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:64px;
+    text-align:center;
+    margin-bottom:60px;
+    font-weight:300;
+}
+
+/* ---------- INVITE ---------- */
+
+.invite-text{
+    max-width:900px;
+    margin:auto;
+    text-align:center;
+    line-height:2;
+    font-size:22px;
+    font-weight:300;
+}
+
+.guest-photo{
+    margin-top:60px;
+    text-align:center;
+}
+
+.guest-photo img{
+    width:100%;
+    max-width:700px;
+    border-radius:20px;
+}
+
+.quote{
+    margin-top:30px;
+    font-family:'Cormorant Garamond',serif;
+    font-size:42px;
+    font-style:italic;
+    opacity:.9;
+}
+
+/* ---------- COUPLE ---------- */
+
+.couple-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:40px;
+}
+
+.person-card{
+    text-align:center;
+}
+
+.person-card img{
+    width:100%;
+    border-radius:24px;
+}
+
+.person-card h3{
+    margin-top:25px;
+    font-size:32px;
+    font-family:'Cormorant Garamond',serif;
+    font-weight:300;
+}
+
+/* ---------- TIMELINE ---------- */
+
+.timeline{
+    display:flex;
+    flex-direction:column;
+    gap:50px;
+}
+
+.timeline-card{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:30px;
+    overflow:hidden;
+    backdrop-filter:blur(10px);
+}
+
+.timeline-time{
+    padding:25px;
+    font-size:40px;
+    text-align:center;
+    font-family:'Cormorant Garamond',serif;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.timeline-content{
+    padding:35px;
+    text-align:center;
+}
+
+.timeline-content h3{
+    font-size:42px;
+    margin-bottom:20px;
+    font-family:'Cormorant Garamond',serif;
+    font-weight:300;
+}
+
+.timeline-content p{
+    line-height:1.8;
+    opacity:.85;
+    margin-bottom:25px;
+}
+
+.timeline-content img{
+    width:100%;
+    border-radius:20px;
+    margin-top:20px;
+}
+
+.map-buttons{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-top:25px;
+}
+
+.map-buttons a{
+    padding:14px 28px;
+    border-radius:40px;
+    text-decoration:none;
+    color:white;
+    border:1px solid rgba(255,255,255,.2);
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(10px);
+    transition:.3s;
+}
+
+.map-buttons a:hover{
+    background:rgba(255,255,255,.18);
+    transform:translateY(-2px);
+}
+
+/* ---------- RSVP ---------- */
+
+.rsvp{
+    text-align:center;
+}
+
+.rsvp p{
+    max-width:700px;
+    margin:20px auto;
+    line-height:1.8;
+}
+
+.telegram-btn{
+    display:inline-block;
+    margin-top:40px;
+    padding:18px 40px;
+    border-radius:50px;
+    text-decoration:none;
+    color:white;
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.2);
+    transition:.3s;
+}
+
+.telegram-btn:hover{
+    transform:translateY(-3px);
+    background:rgba(255,255,255,.18);
+}
+
+/* ---------- FOOTER ---------- */
+
+.footer{
+    padding:60px 20px;
+    text-align:center;
+    opacity:.6;
+    font-size:14px;
+}
+
+/* ---------- MOBILE ---------- */
+
+@media(max-width:768px){
+
+.hero h1{
+    font-size:58px;
+}
+
+.section-title{
+    font-size:48px;
+}
+
+.quote{
+    font-size:32px;
+}
+
+.countdown div{
+    width:90px;
+    height:90px;
+}
+
+.countdown span{
+    font-size:28px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- MUSIC -->
+
+<audio id="bgMusic" loop preload="auto" playsinline>
+    <source src="music.mp3?v=999" type="audio/mpeg">
+</audio>
+
+<button class="music-btn" id="musicToggle">♪</button>
+
+<!-- ENVELOPE -->
+
+<div class="envelope-screen" id="envelopeScreen">
+
+    <div class="envelope" id="envelope">
+
+        <div class="envelope-base"></div>
+
+        <div class="envelope-top"></div>
+
+        <div class="envelope-text">
+            Открыть
+        </div>
+
+    </div>
+
+</div>
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <img src="hero.jpg" alt="Hero">
+
+    <div class="hero-content">
+
+        <h1>Артём & Алёна</h1>
+
+        <div class="hero-date">
+            30 • 07 • 2026
+        </div>
+
+        <div class="countdown">
+
+            <div>
+                <span id="days">0</span>
+                <small>Дней</small>
+            </div>
+
+            <div>
+                <span id="hours">0</span>
+                <small>Часов</small>
+            </div>
+
+            <div>
+                <span id="minutes">0</span>
+                <small>Минут</small>
+            </div>
+
+            <div>
+                <span id="seconds">0</span>
+                <small>Секунд</small>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- INVITATION -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        Дорогие гости
+    </h2>
+
+    <div class="invite-text">
+
+Мы рады сообщить Вам, что 30.07.2026 состоится самое главное торжество в нашей жизни — день нашей свадьбы!  
+        Приглашаем Вас разделить с нами радость этого незабываемого дня.
+    </div>
+
+    <div class="guest-photo">
+
+        <img src="guests.jpg" alt="Guests">
+
+        <div class="quote">
+            Там, где посеяна любовь — растёт радость
+        </div>
+
+    </div>
+
+</section>
+
+<!-- COUPLE -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        Жених и невеста
+    </h2>
+
+    <div class="couple-grid">
+
+        <div class="person-card">
+
+            <img src="groom.jpg" alt="Жених">
+
+            <h3>Жених</h3>
+
+        </div>
+
+        <div class="person-card">
+
+            <img src="bride.jpg" alt="Невеста">
+
+            <h3>Невеста</h3>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- TIMELINE -->
+
+<section class="section">
+
+    <h2 class="section-title">
+        Тайминг дня
+    </h2>
+
+    <div class="timeline">
+
+        <!-- REGISTRY -->
+
+        <div class="timeline-card">
+
+            <div class="timeline-time">
+                10:30
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>Роспись</h3>
+
+                <p>
+                    г. Йошкар-Ола,<br>
+                    ул. Набережная Брюгге, 5
+                </p>
+
+                <img src="registry.jpg" alt="Роспись">
+
+                <div class="map-buttons">
+
+                    <a href="https://yandex.ru/maps/?text=Йошкар-Ола%20Набережная%20Брюгге%205"
+                       target="_blank">
+                       Открыть карту
+                    </a>
+
+                    <a href="https://yandex.ru/maps/?rtext=~Йошкар-Ола%20Набережная%20Брюгге%205"
+                       target="_blank">
+                       Построить маршрут
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- BANQUET -->
+
+        <div class="timeline-card">
+
+            <div class="timeline-time">
+                14:30
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>Свадебный банкет</h3>
+
+                <p>
+                    Республика Марий Эл,<br>
+                    Медведевский район,<br>
+                    Сидоровское сельское поселение,<br>
+                    деревня Новотроицк,<br>
+                    Солнечный бульвар, 6Б
+                </p>
+
+                <img src="banquet-new.jpg" alt="Банкет">
+
+                <div class="map-buttons">
+
+                    <a href="https://yandex.ru/maps/?text=деревня%20Новотроицк%20Солнечный%20бульвар%206Б"
+                       target="_blank">
+                       Открыть карту
+                    </a>
+
+                    <a href="https://yandex.ru/maps/?rtext=~деревня%20Новотроицк%20Солнечный%20бульвар%206Б"
+                       target="_blank">
+                       Построить маршрут
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- RSVP -->
+
+<section class="section rsvp">
+
+    <h2 class="section-title">
+        Подтверждение присутствия
+    </h2>
+
+    <p>
+        Пожалуйста, подтвердите своё присутствие,
+        чтобы мы могли сделать этот день максимально комфортным для каждого гостя.
+    </p>
+
+    <a class="telegram-btn"
+       href="https://t.me/artem_alyona_rsvp_bot"
+       target="_blank">
+       Подтвердить присутствие
+    </a>
+
+</section>
+
+<!-- FOOTER -->
+
+<div class="footer">
+    Артём & Алёна • 30.07.2026
+</div>
+
+<!-- SCRIPTS -->
+
+<script>
+
+/* ---------- ENVELOPE ---------- */
+
+const envelope = document.getElementById("envelope");
+const screen = document.getElementById("envelopeScreen");
+
+envelope.addEventListener("click", () => {
+
+    envelope.classList.add("open");
+
+    setTimeout(() => {
+
+        screen.style.opacity = "0";
+        screen.style.pointerEvents = "none";
+
+    }, 1000);
+
+});
+
+/* ---------- MUSIC ---------- */
+
+const music = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicToggle");
+
+async function playMusic(){
+
+    try{
+
+        music.volume = 0.35;
+
+        await music.play();
+
+    }catch(e){
+
+        console.log("Music blocked");
+
+    }
+
+}
+
+envelope.addEventListener("click", () => {
+
+    playMusic();
+
+});
+
+musicBtn.addEventListener("click", async () => {
+
+    if(music.paused){
+
+        await playMusic();
+
+    }else{
+
+        music.pause();
+
+    }
+
+});
+
+/* ---------- COUNTDOWN ---------- */
+
+const weddingDate = new Date("July 30, 2026 00:00:00").getTime();
+
+setInterval(() => {
+
+    const now = new Date().getTime();
+
+    const distance = weddingDate - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("days").innerHTML = days;
+    document.getElementById("hours").innerHTML = hours;
+    document.getElementById("minutes").innerHTML = minutes;
+    document.getElementById("seconds").innerHTML = seconds;
+
+},1000);
+
+</script>
+
+</body>
+</html>
